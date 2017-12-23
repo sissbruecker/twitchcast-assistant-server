@@ -1,6 +1,6 @@
 const express = require('express');
 const http = require('http');
-const request = require('request-promise');
+const request = require('request');
 const ChannelRecognizer = require('./ChannelRecognizer');
 const config = require('../config');
 
@@ -9,24 +9,15 @@ const recognizer = ChannelRecognizer(config.mappings);
 
 let server;
 
-app.post('/stream/play/:input', async (req, res) => {
+app.post('/stream/play/:input', (req, res) => {
 
     const input = req.params.input;
 
-    try {
-        const channel = recognizer.recognize(input);
+    const channel = recognizer.recognize(input);
 
-        const playUrl = config.twitchcastServer.url + `/stream/play/${channel}`;
+    const playUrl = config.twitchcastServer.url + `/stream/play/${channel}`;
 
-        await request.post(playUrl);
-    } catch(e) {
-        console.error(e);
-        res.status(500);
-        res.json({
-            message: 'Could not start stream',
-            error: e
-        });
-    }
+    request.post(playUrl);
 
     res.status(200);
     res.json({
