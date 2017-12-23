@@ -1,12 +1,37 @@
-function ChannelMapper(mappings) {
+function ChannelRecognizer(mappings) {
 
-    function map(channel) {
+    function recognize(input) {
 
+        const sanitizedInput = sanitize(input);
+
+        return applyMapping(sanitizedInput);
     }
+
+    function applyMapping(input) {
+
+        const match = Object.keys(mappings).find(knownChannel => {
+
+            if (input === knownChannel) return true;
+
+            const alias = mappings[knownChannel];
+
+            return alias.indexOf(input) >= 0;
+        });
+
+        return match
+            ? match
+            : input;
+    }
+
+    return {
+        recognize
+    };
 }
 
-function sanitize(channelInput) {
-    ''.tri
+function sanitize(channelName) {
+    channelName = channelName.trim();
+    channelName = channelName.toLowerCase();
+    return channelName;
 }
 
-module.exports = ChannelMapper;
+module.exports = ChannelRecognizer;
