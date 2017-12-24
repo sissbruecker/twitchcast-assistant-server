@@ -1,4 +1,5 @@
 const db = require('../db');
+const sanitize = require('./sanitize');
 
 function recognize(input) {
 
@@ -25,11 +26,6 @@ function mapOrDefault(input, defaultValue) {
         : defaultValue;
 }
 
-function sanitize(channelName) {
-    channelName = channelName.trim();
-    channelName = channelName.toLowerCase();
-    return channelName;
-}
 
 module.exports = {
     recognize

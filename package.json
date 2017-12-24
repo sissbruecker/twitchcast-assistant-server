@@ -15,6 +15,7 @@
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "express-validator": "^4.3.0",
+    "fuse.js": "^3.2.0",
     "lodash": "^4.17.4",
     "lowdb": "^1.0.0",
     "method-override": "^2.3.10",

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const recognizer = require('../recognizers/channelRecognizer');
+const recognizer = require('../recognizers/fuzzyRecognizer');
 const twitchcastApi = require('../api/twitchcast');
 
 router.post('/play', (req, res) => {
