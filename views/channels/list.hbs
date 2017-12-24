@@ -1,26 +1,27 @@
 <div class="container">
-    <h2>Channels</h2>
 
-    <form method="post" action="/channels">
+    <h4>Channels ({{channels.length}})</h4>
+
+    <form class="single-entry" method="post" action="/channels">
         <div class="row">
-            <label for="input-add-channel">Create new channel mapping</label>
-            <input type="text" id="input-add-channel" name="channelId" autofocus>
+            <input type="text"  name="channelId" autofocus
+            placeholder="Enter new channel">
+            <input class="button-primary" type="submit" value="Add">
         </div>
         {{#each errors}}
             <div class="row validation error">
                 {{msg}}
             </div>
         {{/each}}
-        <input class="button-primary" type="submit" value="Add">
     </form>
 
-    <table class="channels">
+    <table class="channels u-full-width">
         <thead>
         <tr>
-            <td class="play"></td>
-            <td>Channel</td>
-            <td>URL</td>
-            <td></td>
+            <th class="play"></th>
+            <th>Channel</th>
+            <th>URL</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +36,7 @@
                 <td>
                     <a href="https://www.twitch.tv/{{channelId}}">https://www.twitch.tv/{{channelId}}</a>
                 </td>
-                <td>
+                <td class="actions">
                     <a class="button" href="channels/{{channelId}}">Edit</a>
                     <form class="inline" method="post" action="/channels/{{channelId}}?_method=DELETE"
                           onsubmit="return confirm('Do you really want to delete the channel \'{{channelId}}\'?');">

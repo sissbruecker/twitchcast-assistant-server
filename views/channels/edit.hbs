@@ -1,29 +1,27 @@
 <div class="container">
 
     <div class="row">
-        <a class="button" href="/channels">Back</a>
+        <h4>Edit channel '{{channel.channelId}}'</h4>
     </div>
 
-    <h2>Edit channel '{{channel.channelId}}'</h2>
-
-    <form method="post" action="/channels/{{channel.channelId}}">
+    <form class="single-entry" method="post" action="/channels/{{channel.channelId}}">
         <div class="row">
-            <label for="input-add-alias">Add new alias</label>
-            <input type="text" id="input-add-alias" name="aliasName" autofocus>
+            <input type="text" id="input-add-alias" name="aliasName" autofocus
+                   placeholder="Enter new alias">
+            <input class="button-primary" type="submit" value="Add">
         </div>
         {{#each errors}}
             <div class="row validation error">
                 {{msg}}
             </div>
         {{/each}}
-        <input class="button-primary" type="submit" value="Add">
     </form>
 
     <table>
         <thead>
         <tr>
-            <td>Alias</td>
-            <td></td>
+            <th>Alias</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

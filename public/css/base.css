@@ -1,11 +1,11 @@
 /* Basic */
 
 body {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-thead > tr {
-    font-weight: bold;
+a.nav-back {
+    position: absolute;
 }
 
 /* Form */
@@ -19,8 +19,49 @@ form.inline input {
     margin: 0;
 }
 
+form.single-entry input[type='text'] {
+    display: block;
+    float: left;
+}
+
+form.single-entry input[type='submit'] {
+    display: block;
+    float: left;
+    margin-left: 20px;
+}
+
 .validation.error {
     color: lightcoral;
+}
+
+/* Navbar */
+
+nav {
+    border-bottom: solid 1px #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+ul.navbar {
+    list-style: none;
+}
+
+ul.navbar li {
+    float: left;
+    margin: 0;
+    margin-right: 20px;
+    text-transform: uppercase;
+}
+
+ul.navbar a {
+    color: #222;
+    text-decoration: none;
+}
+
+ul.navbar a:hover {
+    color: #1EAEDB;
+    text-decoration: none;
 }
 
 /* Page - channel list */
@@ -39,6 +80,11 @@ table.channels td.play {
 table.channels td.play input {
     position: absolute;
     cursor: pointer;
+}
+
+table.channels td.actions {
+    text-align: right;
+    white-space: nowrap;
 }
 
 .icon.play {
