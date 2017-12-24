@@ -100,8 +100,11 @@ const checkEmptyAlias = check('aliasName')
     .isEmpty()
     .withMessage('Alias must not be empty');
 
-const checkUniqueAlias = check(['channelId', 'aliasName'])
-    .custom((channelId, aliasName) => {
+const checkUniqueAlias = check('aliasName')
+    .custom((aliasName, { req }) => {
+
+        const { channelId } = req.params;
+
         return db.get('channels')
             .find({ channelId })
             .get('alias')
