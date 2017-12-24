@@ -30,9 +30,6 @@
                     <form class="inline" method="post" action="/channels/{{channelId}}/play">
                         <input class="icon play" type="image" src="/public/images/play-button.svg" alt="Play">
                     </form>
-                    <!--<a href="channels/{{channelId}}/play">-->
-                        <!--<img class="icon play" src="/public/images/play-button.svg">-->
-                    <!--</a>-->
                 </td>
                 <td>{{channelId}}</td>
                 <td>
@@ -40,7 +37,8 @@
                 </td>
                 <td>
                     <a class="button" href="channels/{{channelId}}">Edit</a>
-                    <form class="inline" method="post" action="/channels/{{channelId}}?_method=DELETE">
+                    <form class="inline" method="post" action="/channels/{{channelId}}?_method=DELETE"
+                          onsubmit="return confirm('Do you really want to delete the channel \'{{channelId}}\'?');">
                         <input class="button" type="submit" value="Delete">
                     </form>
                 </td>
