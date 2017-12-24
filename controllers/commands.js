@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const recognizer = require('../recognizers/channelRecognizer');
-const config = require('../config');
-const request = require('request');
+const twitchcastApi = require('../api/twitchcast');
 
 router.post('/play', (req, res) => {
 
@@ -10,9 +9,7 @@ router.post('/play', (req, res) => {
 
     const channel = recognizer.recognize(input);
 
-    const playUrl = config.twitchcastServer.url + `/stream/play/${channel}`;
-
-    request.post(playUrl);
+    twitchcastApi.play(channel);
 
     res.status(200);
     res.json({
@@ -23,9 +20,7 @@ router.post('/play', (req, res) => {
 
 router.post('/stop', (req, res) => {
 
-    const stopUrl = config.twitchcastServer.url + '/stream/stop';
-
-    request.post(stopUrl);
+    twitchcastApi.stop();
 
     res.status(200);
     res.json({

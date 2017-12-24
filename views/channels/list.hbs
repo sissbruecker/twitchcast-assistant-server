@@ -14,9 +14,10 @@
         <input class="button-primary" type="submit" value="Add">
     </form>
 
-    <table>
+    <table class="channels">
         <thead>
         <tr>
+            <td class="play"></td>
             <td>Channel</td>
             <td>URL</td>
             <td></td>
@@ -25,6 +26,14 @@
         <tbody>
         {{#each channels}}
             <tr>
+                <td class="play">
+                    <form class="inline" method="post" action="/channels/{{channelId}}/play">
+                        <input class="icon play" type="image" src="/public/images/play-button.svg" alt="Play">
+                    </form>
+                    <!--<a href="channels/{{channelId}}/play">-->
+                        <!--<img class="icon play" src="/public/images/play-button.svg">-->
+                    <!--</a>-->
+                </td>
                 <td>{{channelId}}</td>
                 <td>
                     <a href="https://www.twitch.tv/{{channelId}}">https://www.twitch.tv/{{channelId}}</a>

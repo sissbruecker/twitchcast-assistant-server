@@ -4,6 +4,7 @@ const _ = require('lodash');
 const { check, validationResult } = require('express-validator/check');
 
 const db = require('../db');
+const twitchcastApi = require('../api/twitchcast');
 
 function listView(res, extras) {
 
@@ -72,6 +73,15 @@ router.post('/', [checkEmptyChannel, checkUniqueChannel], (req, res) => {
 router.get('/:channelId', (req, res) => {
 
     editView(res, req.params.channelId);
+});
+
+router.post('/:channelId/play', (req, res) => {
+
+    const { channelId } = req.params;
+
+    twitchcastApi.play(channelId);
+
+    res.redirect('/channels');
 });
 
 router.delete('/:channelId', (req, res) => {

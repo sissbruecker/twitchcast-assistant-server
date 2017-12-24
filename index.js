@@ -1,8 +1,14 @@
 const server = require('./server');
 
-const port = process.env.TWITCHCAST_ASSISTANT_SERVER_PORT || 3010;
+// Init and log config
+const config = require('dotenv').config().parsed;
 
-server.start(port);
+console.log('Twitchcast Gateway configuration:');
+Object.keys(config).forEach(key => {
+    console.log(`\t${key}: ${config[key]}`);
+});
 
-console.log(`Twitchcast assistant server running on port: ${port}`);
+// Start server
+server.start(process.env.TWITCHCAST_GATEWAY_PORT);
 
+console.log('TwitchCast Gateway started');

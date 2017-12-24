@@ -1,3 +1,5 @@
+/* Basic */
+
 body {
     margin-top: 20px;
 }
@@ -21,3 +23,25 @@ form.inline input {
     color: lightcoral;
 }
 
+/* Page - channel list */
+table.channels td {
+    vertical-align: baseline;
+}
+
+table.channels td .button {
+    margin: 0;
+}
+
+table.channels td.play {
+    width: 20px
+}
+
+table.channels td.play input {
+    position: absolute;
+    cursor: pointer;
+}
+
+.icon.play {
+    width: 32px;
+    height: 32px;
+}
