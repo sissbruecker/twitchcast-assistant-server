@@ -1,0 +1,43 @@
+<div class="container">
+
+    <div class="row">
+        <a class="button" href="/channels">Back</a>
+    </div>
+
+    <h2>Edit channel '{{channel.channelId}}'</h2>
+
+    <form method="post" action="/channels/{{channel.channelId}}">
+        <div class="row">
+            <label for="input-add-alias">Add new alias</label>
+            <input type="text" id="input-add-alias" name="aliasName" autofocus>
+        </div>
+        {{#each errors}}
+            <div class="row validation error">
+                {{msg}}
+            </div>
+        {{/each}}
+        <input class="button-primary" type="submit" value="Add">
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <td>Alias</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each alias}}
+            <tr>
+                <td>{{name}}</td>
+                <td>
+                    <form class="inline" method="post"
+                          action="/channels/{{../channel.channelId}}/alias/{{name}}?_method=DELETE">
+                        <input class="button" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

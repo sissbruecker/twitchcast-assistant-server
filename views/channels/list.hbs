@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Channels</h2>
+
+    <form method="post" action="/channels">
+        <div class="row">
+            <label for="input-add-channel">Create new channel mapping</label>
+            <input type="text" id="input-add-channel" name="channelId" autofocus>
+        </div>
+        {{#each errors}}
+            <div class="row validation error">
+                {{msg}}
+            </div>
+        {{/each}}
+        <input class="button-primary" type="submit" value="Add">
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <td>Channel</td>
+            <td>URL</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each channels}}
+            <tr>
+                <td>{{channelId}}</td>
+                <td>
+                    <a href="https://www.twitch.tv/{{channelId}}">https://www.twitch.tv/{{channelId}}</a>
+                </td>
+                <td>
+                    <a class="button" href="channels/{{channelId}}">Edit</a>
+                    <form class="inline" method="post" action="/channels/{{channelId}}?_method=DELETE">
+                        <input class="button" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

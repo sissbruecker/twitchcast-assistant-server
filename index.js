@@ -1,4 +1,4 @@
-const server = require('./src/server');
+const server = require('./server');
 
 const port = process.env.TWITCHCAST_ASSISTANT_SERVER_PORT || 3010;
 

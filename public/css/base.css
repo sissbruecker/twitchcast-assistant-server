@@ -1,0 +1,23 @@
+body {
+    margin-top: 20px;
+}
+
+thead > tr {
+    font-weight: bold;
+}
+
+/* Form */
+
+form.inline {
+    margin: 0;
+    display: inline;
+}
+
+form.inline input {
+    margin: 0;
+}
+
+.validation.error {
+    color: lightcoral;
+}
+
