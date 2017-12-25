@@ -139,6 +139,30 @@ router.post('/:channelId', [checkEmptyAlias, checkUniqueAlias], (req, res) => {
     editView(res, channelId);
 });
 
+router.post('/:channelId/stream', (req, res) => {
+
+    const { channelId } = req.params;
+    const { game, viewerCount, createdAt, previewUrl } = req.body;
+
+    const stream = {
+        game,
+        viewerCount,
+        createdAt,
+        previewUrl
+    };
+
+    db.get('channels')
+        .find({ channelId })
+        .assign({ stream })
+        .write();
+
+    res.status(200);
+    res.json({
+        message: `Updated stream for channel: ${channelId}`,
+        stream
+    });
+});
+
 router.delete('/:channelId/alias/:aliasName', (req, res) => {
 
     const { channelId, aliasName } = req.params;

@@ -9,6 +9,7 @@ const app = express();
 
 // Express middleware
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 // Express view engine
