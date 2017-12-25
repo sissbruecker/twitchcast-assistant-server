@@ -20,8 +20,8 @@
         <tr>
             <th class="play"></th>
             <th>Channel</th>
+            <th>Last stream</th>
             <th>Game</th>
-            <th>Last seen</th>
             <th></th>
         </tr>
         </thead>
@@ -34,13 +34,13 @@
                     </form>
                 </td>
                 <td>
-                    <a href="https://www.twitch.tv/{{channelId}}">{{channelId}}</a>
-                </td>
-                <td>
-                    {{stream.game}}
+                    <a href="https://www.twitch.tv/{{channelId}}">{{displayName}}</a>
                 </td>
                 <td>
                     {{stream.createdAt}}
+                </td>
+                <td>
+                    {{stream.game}}
                 </td>
                 <td class="actions">
                     <a class="button" href="channels/{{channelId}}">Edit</a>

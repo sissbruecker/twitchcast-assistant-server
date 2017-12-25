@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const recognizer = require('../recognizers/fuzzyRecognizer');
-const twitchcastApi = require('../api/twitchcast');
+const recognizer = require('../../recognizers/fuzzyRecognizer');
+const twitchcastApi = require('../../api/twitchcast');
 
 router.post('/play', (req, res) => {
 
@@ -13,7 +13,7 @@ router.post('/play', (req, res) => {
 
     res.status(200);
     res.json({
-        message: `Sent request to play channel: ${channel}`,
+        message: `Sent command to play channel: ${channel}`,
         channel: channel
     });
 });
@@ -24,7 +24,7 @@ router.post('/stop', (req, res) => {
 
     res.status(200);
     res.json({
-        message: 'Sent request to stop playback'
+        message: 'Sent request to stop casting'
     });
 });
 

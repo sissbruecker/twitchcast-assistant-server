@@ -3,31 +3,42 @@ const router = express.Router();
 const _ = require('lodash');
 const { check, validationResult } = require('express-validator/check');
 
-const db = require('../db');
+const repo = require('../db/channelRepository');
 const twitchcastApi = require('../api/twitchcast');
 
 function listView(res, extras) {
 
-    const channels = db.get('channels')
+    function listItem(channel) {
+        return {
+            channelId: channel.channelId,
+            displayName: channel.displayName || channel.channelId,
+            stream: channel.stream
+        };
+    }
+
+    const channelListItems = _.chain(repo.list())
         .sortBy('channelId')
+        .map(listItem)
         .value();
 
     extras = extras || {};
 
-    res.render('channels/list', Object.assign({ channels }, extras));
+    res.render('channels/list', Object.assign({ channels: channelListItems }, extras));
 }
 
 function editView(res, channelId, extras) {
 
-    const channel = db.get('channels')
-        .find({ channelId })
-        .value();
-
-    const alias = _.sortBy(channel.alias, alias => alias.name.toLowerCase());
-
     extras = extras || {};
 
-    res.render('channels/edit', Object.assign({ channel, alias }, extras));
+    const channel = repo.find(channelId);
+    const alias = _.sortBy(channel.alias, alias => alias.name.toLowerCase());
+    const viewData = {
+        channelId,
+        displayName: channel.displayName || channel.channelId,
+        alias
+    };
+
+    res.render('channels/edit', Object.assign(viewData, extras));
 }
 
 router.get('/', (req, res) => {
@@ -40,11 +51,8 @@ const checkEmptyChannel = check('channelId')
     .withMessage('Channel ID must not be empty');
 
 const checkUniqueChannel = check('channelId')
-    .custom((channelId) => {
-        return db.get('channels')
-            .find({ channelId })
-            .value() == null;
-    })
+    .not()
+    .custom(repo.find)
     .withMessage('Channel already exists');
 
 router.post('/', [checkEmptyChannel, checkUniqueChannel], (req, res) => {
@@ -58,16 +66,10 @@ router.post('/', [checkEmptyChannel, checkUniqueChannel], (req, res) => {
     }
 
     const { channelId } = req.body;
-    const channel = {
-        channelId,
-        alias: []
-    };
 
-    db.get('channels')
-        .push(channel)
-        .write();
+    repo.save(channelId);
 
-    editView(res, channelId);
+    res.redirect(`/channels/${channelId}`);
 });
 
 router.get('/:channelId', (req, res) => {
@@ -86,11 +88,9 @@ router.post('/:channelId/play', (req, res) => {
 
 router.delete('/:channelId', (req, res) => {
 
-    const channelId = req.params.channelId;
+    const { channelId } = req.params;
 
-    db.get('channels')
-        .remove({ channelId })
-        .write();
+    repo.remove(channelId);
 
     res.redirect('/channels');
 });
@@ -101,15 +101,10 @@ const checkEmptyAlias = check('aliasName')
     .withMessage('Alias must not be empty');
 
 const checkUniqueAlias = check('aliasName')
+    .not()
     .custom((aliasName, { req }) => {
-
         const { channelId } = req.params;
-
-        return db.get('channels')
-            .find({ channelId })
-            .get('alias')
-            .find({ name: aliasName })
-            .value() == null;
+        return repo.findAlias(channelId, aliasName);
     })
     .withMessage('Alias already exists');
 
@@ -126,52 +121,16 @@ router.post('/:channelId', [checkEmptyAlias, checkUniqueAlias], (req, res) => {
         });
     }
 
-    const alias = {
-        name: aliasName
-    };
-
-    db.get('channels')
-        .find({ channelId })
-        .get('alias')
-        .push(alias)
-        .write();
+    repo.addAlias(channelId, aliasName);
 
     editView(res, channelId);
-});
-
-router.post('/:channelId/stream', (req, res) => {
-
-    const { channelId } = req.params;
-    const { game, viewerCount, createdAt, previewUrl } = req.body;
-
-    const stream = {
-        game,
-        viewerCount,
-        createdAt,
-        previewUrl
-    };
-
-    db.get('channels')
-        .find({ channelId })
-        .assign({ stream })
-        .write();
-
-    res.status(200);
-    res.json({
-        message: `Updated stream for channel: ${channelId}`,
-        stream
-    });
 });
 
 router.delete('/:channelId/alias/:aliasName', (req, res) => {
 
     const { channelId, aliasName } = req.params;
 
-    db.get('channels')
-        .find({ channelId })
-        .get('alias')
-        .remove({ name: aliasName })
-        .write();
+    repo.removeAlias(channelId, aliasName);
 
     res.redirect(`/channels/${channelId}`);
 });

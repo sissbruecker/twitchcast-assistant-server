@@ -1,10 +1,10 @@
 <div class="container">
 
     <div class="row">
-        <h4>Edit channel '{{channel.channelId}}'</h4>
+        <h4>Edit channel '{{displayName}}'</h4>
     </div>
 
-    <form class="single-entry" method="post" action="/channels/{{channel.channelId}}">
+    <form class="single-entry" method="post" action="/channels/{{channelId}}">
         <div class="row">
             <input type="text" id="input-add-alias" name="aliasName" autofocus
                    placeholder="Enter new alias">
@@ -30,7 +30,7 @@
                 <td>{{name}}</td>
                 <td>
                     <form class="inline" method="post"
-                          action="/channels/{{../channel.channelId}}/alias/{{name}}?_method=DELETE">
+                          action="/channels/{{../channelId}}/alias/{{name}}?_method=DELETE">
                         <input class="button" type="submit" value="Delete">
                     </form>
                 </td>

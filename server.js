@@ -19,8 +19,9 @@ app.set('view engine', '.hbs');
 // Routes
 app.use('/public', express.static('public'));
 app.use('/channels', require('./controllers/channels'));
-app.use('/commands', require('./controllers/commands'));
-app.use('/recognize', require('./controllers/recognize'));
+app.use('/json/commands', require('./controllers/json/commands'));
+app.use('/json/recognize', require('./controllers/json/recognize'));
+app.use('/json/channels', require('./controllers/json/channels'));
 
 function start(port) {
     server = http.createServer(app);

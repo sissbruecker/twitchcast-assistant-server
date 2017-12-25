@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const recognizer = require('../recognizers/fuzzyRecognizer');
+const recognizer = require('../../recognizers/fuzzyRecognizer');
 
 router.get('/', (req, res) => {
 
