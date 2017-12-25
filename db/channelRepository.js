@@ -86,6 +86,7 @@ function safeId(channelId) {
 }
 
 module.exports = {
+    channels,
     list,
     find,
     save,

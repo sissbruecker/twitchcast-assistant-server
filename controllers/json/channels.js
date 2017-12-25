@@ -28,10 +28,13 @@ router.post('/:channelId/stream', (req, res) => {
     const { channelId } = req.params;
     const { game, viewerCount, createdAt, previewUrl } = req.body;
 
+    const timestamp = new Date().getTime();
+
     const stream = {
         game,
         viewerCount,
         createdAt,
+        timestamp,
         previewUrl
     };
 

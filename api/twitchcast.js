@@ -15,11 +15,23 @@ function stop() {
     request.post(stopUrl, _.noop);
 }
 
+function browse(browserData) {
+
+    const options = {
+        url: serverUrl() + '/browse',
+        method: 'POST',
+        json: browserData
+    };
+
+    request.post(options, _.noop);
+}
+
 function serverUrl() {
     return process.env.TWITCHCAST_SERVER_URL;
 }
 
 module.exports = {
     play,
-    stop
+    stop,
+    browse
 };
