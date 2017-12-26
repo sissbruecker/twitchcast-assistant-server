@@ -29,8 +29,9 @@
         {{#each channels}}
             <tr>
                 <td class="play">
+                    <img class="logo" src="{{logoUrl}}"/>
                     <form class="inline" method="post" action="/channels/{{channelId}}/play">
-                        <input class="icon play" type="image" src="/public/images/play-button.svg" alt="Play">
+                        <input class="icon play logo" type="image" src="/public/images/play-button-white.svg" alt="Play">
                     </form>
                 </td>
                 <td>

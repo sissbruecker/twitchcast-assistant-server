@@ -85,12 +85,29 @@ table.channels td.play input {
     cursor: pointer;
 }
 
+table.channels td.play img {
+    position: absolute;
+    cursor: pointer;
+}
+
+table.channels td.play form {
+    display: none;
+}
+
+table.channels td.play:hover form {
+    display: block;
+}
+
 table.channels td.actions {
     text-align: right;
     white-space: nowrap;
 }
 
+table.channels .logo {
+    width: 35px;
+    height: 35px;
+}
+
 .icon.play {
-    width: 32px;
-    height: 32px;
+    opacity: 0.8;
 }

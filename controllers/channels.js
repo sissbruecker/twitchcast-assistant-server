@@ -11,6 +11,7 @@ function listView(res, extras) {
     function listItem(channel) {
         return {
             channelId: channel.channelId,
+            logoUrl: channel.logoUrl,
             displayName: channel.displayName || channel.channelId,
             stream: channel.stream
         };
