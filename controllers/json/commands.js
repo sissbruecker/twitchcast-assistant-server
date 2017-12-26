@@ -31,17 +31,10 @@ router.post('/stop', (req, res) => {
 
 router.post('/browse', (req, res) => {
 
-    function channelItem(channel) {
-        return Object.assign({}, channel, {
-            displayName: channel.displayName || channel.channelId,
-        });
-    }
-
     const recentChannels = channelRepo.channels()
         .filter(channel => channel.stream != null && channel.stream.timestamp != null)
         .orderBy([channel => channel.stream.timestamp], ['desc'])
         .take(10)
-        .map(channelItem)
         .value();
 
     const browserData = {

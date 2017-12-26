@@ -9,23 +9,13 @@ const twitchApi = require('../api/twitch');
 
 function listView(res, extras) {
 
-    function listItem(channel) {
-        return {
-            channelId: channel.channelId,
-            logoUrl: channel.logoUrl,
-            displayName: channel.displayName || channel.channelId,
-            stream: channel.stream
-        };
-    }
-
-    const channelListItems = _.chain(repo.list())
+    const channels = repo.channels()
         .sortBy('channelId')
-        .map(listItem)
         .value();
 
     extras = extras || {};
 
-    res.render('channels/list', Object.assign({ channels: channelListItems }, extras));
+    res.render('channels/list', Object.assign({ channels }, extras));
 }
 
 function editView(res, channelId, extras) {
@@ -36,7 +26,7 @@ function editView(res, channelId, extras) {
     const alias = _.sortBy(channel.alias, alias => alias.name.toLowerCase());
     const viewData = {
         channelId,
-        displayName: channel.displayName || channel.channelId,
+        displayName: channel.displayName,
         alias
     };
 
