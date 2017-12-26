@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 // Express view engine
-app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
+app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: require('./util/helpers') }));
 app.set('view engine', '.hbs');
 
 // Routes
