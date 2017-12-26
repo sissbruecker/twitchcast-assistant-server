@@ -3,19 +3,19 @@
     <h4>Channels ({{channels.length}})</h4>
 
     <form class="single-entry" method="post" action="/channels">
-        <div class="row">
+        <div class="clearfix">
             <input type="text"  name="channelId" autofocus
-            placeholder="Enter new channel">
-            <input class="button-primary" type="submit" value="Add">
+            placeholder="Add new channel">
+            <input type="submit" value="Add">
         </div>
         {{#each errors}}
-            <div class="row message error">
+            <div class="message error">
                 {{msg}}
             </div>
         {{/each}}
     </form>
 
-    <table class="channels u-full-width">
+    <table class="channels">
         <thead>
         <tr>
             <th class="play"></th>
@@ -44,10 +44,10 @@
                     {{stream.game}}
                 </td>
                 <td class="actions">
-                    <a class="button" href="channels/{{channelId}}">Edit</a>
+                    <a class="button button-outline" href="channels/{{channelId}}">Edit</a>
                     <form class="inline" method="post" action="/channels/{{channelId}}?_method=DELETE"
                           onsubmit="return confirm('Do you really want to delete the channel \'{{channelId}}\'?');">
-                        <input class="button" type="submit" value="Delete">
+                        <input class="button button-outline" type="submit" value="Delete">
                     </form>
                 </td>
             </tr>

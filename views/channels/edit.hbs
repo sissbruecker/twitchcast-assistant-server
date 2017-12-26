@@ -1,17 +1,15 @@
 <div class="container">
 
-    <div class="row">
-        <h4>Edit channel '{{displayName}}'</h4>
-    </div>
+    <h4>Edit channel '{{displayName}}'</h4>
 
     <form class="single-entry" method="post" action="/channels/{{channelId}}">
-        <div class="row">
+        <div class="clearfix">
             <input type="text" id="input-add-alias" name="aliasName" autofocus
-                   placeholder="Enter new alias">
-            <input class="button-primary" type="submit" value="Add">
+                   placeholder="Add new alias">
+            <input type="submit" value="Add">
         </div>
         {{#each errors}}
-            <div class="row message error">
+            <div class="message error">
                 {{msg}}
             </div>
         {{/each}}
