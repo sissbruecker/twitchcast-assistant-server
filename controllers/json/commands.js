@@ -31,10 +31,12 @@ router.post('/stop', (req, res) => {
 
 router.post('/browse', (req, res) => {
 
+    const limit = req.query.limit || 10;
+
     const recentChannels = channelRepo.channels()
         .filter(channel => channel.stream != null && channel.stream.timestamp != null)
         .orderBy([channel => channel.stream.timestamp], ['desc'])
-        .take(10)
+        .take(limit)
         .value();
 
     const browserData = {
