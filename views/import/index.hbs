@@ -1,0 +1,25 @@
+<div class="container">
+
+    <h4>Import</h4>
+
+    <form class="single-entry" method="post" action="/import">
+        <div class="row">
+            <label>Import followed channels from twitch</label>
+            <input type="text" name="login" autofocus
+                   placeholder="Twitch user login">
+            <input class="button-primary" type="submit" value="Import">
+        </div>
+        {{#each errors}}
+            <div class="row message error">
+                {{msg}}
+            </div>
+        {{/each}}
+    </form>
+
+    {{#if result}}
+        <div class="row message success">
+            Imported {{result.channels.length}} channels
+        </div>
+    {{/if}}
+
+</div>

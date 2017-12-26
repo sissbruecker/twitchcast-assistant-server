@@ -30,8 +30,12 @@ form.single-entry input[type='submit'] {
     margin-left: 20px;
 }
 
-.validation.error {
+.message.error {
     color: lightcoral;
+}
+
+.message.success {
+    color: lightgreen;
 }
 
 /* Navbar */
@@ -49,8 +53,7 @@ ul.navbar {
 
 ul.navbar li {
     float: left;
-    margin: 0;
-    margin-right: 20px;
+    margin: 0 20px 0 0;
     text-transform: uppercase;
 }
 
