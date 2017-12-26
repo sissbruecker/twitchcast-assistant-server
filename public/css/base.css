@@ -59,8 +59,16 @@ ul.navbar li {
     text-transform: uppercase;
 }
 
+/* Tables */
+table th a .icon.sort {
+    font-size: 12px;
+}
 
 /* Page - channel list */
+table.channels th a {
+    color: #606c76;
+}
+
 table.channels td {
     vertical-align: baseline;
 }
@@ -101,7 +109,7 @@ table.channels .logo {
     height: 35px;
 }
 
-.icon.play {
+table.channels .icon.play {
     opacity: 0.8;
     filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 1));
 }

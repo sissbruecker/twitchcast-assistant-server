@@ -6,16 +6,45 @@ const { check, validationResult } = require('express-validator/check');
 const repo = require('../db/channelRepository');
 const twitchcastApi = require('../api/twitchcast');
 const twitchApi = require('../api/twitch');
+const TableModel = require('../util/TableModel');
 
-function listView(res, extras) {
+const tableModel = TableModel({
+    route: '/channels',
+    columns: [
+        {
+            key: 'channelId',
+            label: 'Channel'
+        },
+        {
+            key: 'timestamp',
+            label: 'Last stream',
+            getter: channel => channel.stream
+                ? channel.stream.timestamp
+                : 0
+        },
+        {
+            key: 'game',
+            label: 'Game',
+            getter: channel => channel.stream
+                ? channel.stream.game
+                : ''
+        }
+    ]
+});
+
+function listView(req, res, extras) {
+
+    const sort = tableModel.getSort(req);
 
     const channels = repo.channels()
-        .sortBy('channelId')
+        .orderBy([sort.getter], [sort.sortDir])
         .value();
+
+    const table = tableModel.getState(req);
 
     extras = extras || {};
 
-    res.render('channels/list', Object.assign({ channels }, extras));
+    res.render('channels/list', Object.assign({ channels, table }, extras));
 }
 
 function editView(res, channelId, extras) {
@@ -34,7 +63,7 @@ function editView(res, channelId, extras) {
 }
 
 router.get('/', (req, res) => {
-    listView(res);
+    listView(req, res);
 });
 
 const checkEmptyChannel = check('channelId')
@@ -47,7 +76,7 @@ router.post('/', [checkEmptyChannel], async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return listView(res, {
+        return listView(req, res, {
             errors: errors.array()
         });
     }
@@ -57,7 +86,7 @@ router.post('/', [checkEmptyChannel], async (req, res) => {
     const channel = await twitchApi.getUser(channelId);
 
     if (!channel) {
-        return listView(res, {
+        return listView(req, res, {
             errors: [{ msg: `Channel does not exist: ${channelId}` }]
         });
     }
