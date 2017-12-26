@@ -1,20 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator/check');
 
+const twitchApi = require('../../api/twitch');
 const channelRepo = require('../../db/channelRepository');
-const validationErrorHandler = require('./validationErrorHandler');
 
-const checkEmptyChannel = check('channelId')
-    .not()
-    .isEmpty()
-    .withMessage('Channel ID must not be empty');
+router.post('/follow/:channelId', async (req, res) => {
 
-router.post('/', [checkEmptyChannel, validationErrorHandler], (req, res) => {
+    const { channelId } = req.params;
 
-    const { channelId, logoUrl } = req.body;
+    let channel = await twitchApi.getUser(channelId);
 
-    const channel = channelRepo.save(channelId, { logoUrl });
+    channel = channelRepo.save(channelId, channel);
 
     res.status(200);
     res.json({
@@ -23,7 +19,7 @@ router.post('/', [checkEmptyChannel, validationErrorHandler], (req, res) => {
     });
 });
 
-router.post('/:channelId/stream', (req, res) => {
+router.post('/stream/:channelId', (req, res) => {
 
     const { channelId } = req.params;
     const { game, viewerCount, createdAt, previewUrl } = req.body;

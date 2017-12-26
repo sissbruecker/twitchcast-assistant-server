@@ -22,7 +22,7 @@ app.use('/channels', require('./controllers/channels'));
 app.use('/import', require('./controllers/import'));
 app.use('/json/commands', require('./controllers/json/commands'));
 app.use('/json/recognize', require('./controllers/json/recognize'));
-app.use('/json/channels', require('./controllers/json/channels'));
+app.use('/json/hooks', require('./controllers/json/hooks'));
 
 function start(port) {
     server = http.createServer(app);
