@@ -38,7 +38,7 @@ router.post('/browse', (req, res) => {
     }
 
     const recentChannels = channelRepo.channels()
-        .filter(channel => channel.stream != null)
+        .filter(channel => channel.stream != null && channel.stream.timestamp != null)
         .orderBy([channel => channel.stream.timestamp], ['desc'])
         .take(10)
         .map(channelItem)
