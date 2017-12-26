@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator/check');
 
 const repo = require('../db/channelRepository');
 const twitchcastApi = require('../api/twitchcast');
+const twitchApi = require('../api/twitch');
 
 function listView(res, extras) {
 
@@ -51,12 +52,7 @@ const checkEmptyChannel = check('channelId')
     .isEmpty()
     .withMessage('Channel ID must not be empty');
 
-const checkUniqueChannel = check('channelId')
-    .not()
-    .custom(repo.find)
-    .withMessage('Channel already exists');
-
-router.post('/', [checkEmptyChannel, checkUniqueChannel], (req, res) => {
+router.post('/', [checkEmptyChannel], async (req, res) => {
 
     const errors = validationResult(req);
 
@@ -68,7 +64,15 @@ router.post('/', [checkEmptyChannel, checkUniqueChannel], (req, res) => {
 
     const { channelId } = req.body;
 
-    repo.save(channelId);
+    const channel = await twitchApi.getUser(channelId);
+
+    if (!channel) {
+        return listView(res, {
+            errors: [{ msg: `Channel does not exist: ${channelId}` }]
+        });
+    }
+
+    repo.save(channelId, channel);
 
     res.redirect(`/channels/${channelId}`);
 });
