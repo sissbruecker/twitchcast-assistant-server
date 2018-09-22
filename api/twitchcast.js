@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 function play(channelId) {
 
-    const playUrl = serverUrl() + `/stream/play/${channelId}`;
+    const playUrl = serverUrl() + `/stream/embed/${channelId}`;
 
     request.post(playUrl, _.noop);
 }
