@@ -19,6 +19,21 @@ router.post('/play', (req, res) => {
     });
 });
 
+router.post('/playLatestVideo', (req, res) => {
+
+    const { input } = req.query;
+
+    const channel = recognizer.recognize(input);
+
+    twitchcastApi.playLatestVideo(channel);
+
+    res.status(200);
+    res.json({
+        message: `Sent command to play latest video for channel: ${channel}`,
+        channel: channel
+    });
+});
+
 router.post('/stop', (req, res) => {
 
     twitchcastApi.stop();

@@ -3,7 +3,14 @@ const _ = require('lodash');
 
 function play(channelId) {
 
-    const playUrl = serverUrl() + `/stream/embed/${channelId}`;
+    const playUrl = serverUrl() + `/stream/channel/${channelId}`;
+
+    request.post(playUrl, _.noop);
+}
+
+function playLatestVideo(channelId) {
+
+    const playUrl = serverUrl() + `/stream/channel/${channelId}/latestVideo`;
 
     request.post(playUrl, _.noop);
 }
@@ -32,6 +39,7 @@ function serverUrl() {
 
 module.exports = {
     play,
+    playLatestVideo,
     stop,
     browse
 };
