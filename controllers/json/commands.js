@@ -34,6 +34,18 @@ router.post('/playLatestVideo', (req, res) => {
     });
 });
 
+router.post('/seekTo', (req, res) => {
+
+    const { minutes } = req.query;
+
+    twitchcastApi.seekTo(minutes);
+
+    res.status(200);
+    res.json({
+        message: `Sent command to seek to ${minutes} minutes`
+    });
+});
+
 router.post('/stop', (req, res) => {
 
     twitchcastApi.stop();

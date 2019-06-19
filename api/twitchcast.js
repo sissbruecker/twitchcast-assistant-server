@@ -15,6 +15,13 @@ function playLatestVideo(channelId) {
     request.post(playUrl, _.noop);
 }
 
+function seekTo(minutes) {
+
+    const playUrl = serverUrl() + `/stream/seek/${minutes}`;
+
+    request.post(playUrl, _.noop);
+}
+
 function stop() {
 
     const stopUrl = serverUrl() + '/stream/stop';
@@ -40,6 +47,7 @@ function serverUrl() {
 module.exports = {
     play,
     playLatestVideo,
+    seekTo,
     stop,
     browse
 };
